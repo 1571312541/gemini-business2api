@@ -2,6 +2,9 @@
 FROM node:20-slim AS frontend-builder
 WORKDIR /app/frontend
 
+# 配置 npm 镜像
+RUN npm config set registry https://registry.npmmirror.com
+
 # 先复制 package 文件利用 Docker 缓存
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install --silent
@@ -20,8 +23,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # 安装 Python 依赖（合并为单一 RUN 指令以减少层数）
 COPY requirements.txt .
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc && \
-    pip install --no-cache-dir -r requirements.txt && \
+    apt-get install -y --no-install-recommends gcc chromium chromium-driver && \
+    pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple && \
     apt-get purge -y gcc && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
