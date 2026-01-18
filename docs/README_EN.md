@@ -76,6 +76,18 @@
 git clone https://github.com/Dreamy-rain/gemini-business2api.git
 cd gemini-business2api
 bash setup.sh
+
+cp .env.example .env
+# Edit .env to set ADMIN_KEY
+
+source .venv/bin/activate  # Linux/macOS
+# .venv\Scripts\activate.bat  # Windows
+
+python main.py
+
+# Run with pm2 in background
+# Make sure you're in the project directory
+pm2 start main.py --name gemini-api --interpreter ./.venv/bin/python3
 ```
 
 **Windows:**
@@ -83,16 +95,30 @@ bash setup.sh
 git clone https://github.com/Dreamy-rain/gemini-business2api.git
 cd gemini-business2api
 setup.bat
+
+copy .env.example .env
+# Edit .env to set ADMIN_KEY
+
+source .venv/bin/activate  # Linux/macOS
+# .venv\Scripts\activate.bat  # Windows
+
+python main.py
+
+# Run with pm2 in background
+# Make sure you're in the project directory
+pm2 start main.py --name gemini-api --interpreter ./.venv/bin/python3
 ```
 
-The setup script automatically:
-- Syncs latest code
-- Builds frontend
-- Creates Python virtual environment
-- Installs dependencies
-- Creates configuration file
+**Script Features:**
+- ✅ Automatically syncs latest code
+- ✅ Updates frontend to latest versions
+- ✅ Creates/updates Python virtual environment
+- ✅ Installs/updates dependencies
+- ✅ Automatically creates `.env` config file (if not exists)
 
-After completion, edit `.env` to set `ADMIN_KEY`, then run `python main.py`
+**First Installation:** After completion, edit `.env` to set `ADMIN_KEY`, then run `python main.py`
+
+**Update Project:** Simply run the same command, the script will automatically update all components (code, dependencies, frontend)
 
 ### Method 2: Manual Deployment
 
@@ -114,40 +140,40 @@ source .venv/bin/activate  # Linux/macOS
 # Install Python dependencies
 pip install -r requirements.txt
 cp .env.example .env
+# win copy .env.example .env
 # Edit .env to set ADMIN_KEY
 python main.py
+
+# Run with pm2 in background
+# Make sure you're in the project directory
+pm2 start main.py --name gemini-api --interpreter ./.venv/bin/python3
 ```
 
-### Method 3: Docker
+### Method 3: Docker Compose (Recommended for Production)
+
+**Supports ARM64 and AMD64 architectures**
 
 ```bash
-docker build -t gemini-business2api .
-docker run -d -p 7860:7860 \
-  -v ./data:/app/data \
-  -e ADMIN_KEY=your_admin_key \
-  gemini-business2api
+# 1. Clone the repository
+git clone https://github.com/Dreamy-rain/gemini-business2api.git
+cd gemini-business2api
+
+# 2. Configure environment variables
+cp .env.example .env
+# Edit .env to set ADMIN_KEY
+
+# 3. Start the service
+docker-compose up -d
+
+# 4. View logs
+docker-compose logs -f
+
+# 5. Update to the latest version
+docker-compose pull && docker-compose up -d
 ```
 
 Thanks to [PR #9](https://github.com/Dreamy-rain/gemini-business2api/pull/9) for optimizing the Dockerfile build
 
-### Update
-
-**Linux/macOS:**
-```bash
-bash setup.sh --update
-```
-
-**Windows:**
-```cmd
-setup.bat --update
-```
-
-**HuggingFace:**
-```
-Currently only supports redeployment for updates. Remember to save your data, PostgreSQL is recommended.
-```
-
-The update script automatically backs up configuration, pulls latest code, updates dependencies, and builds the frontend.
 
 ### Optional: Database Persistence (Local / HF Spaces)
 
@@ -187,29 +213,29 @@ The update script automatically backs up configuration, pulls latest code, updat
 
 <table>
   <tr>
-    <td><img src="1.png" alt="Admin System 1" /></td>
-    <td><img src="2.png" alt="Admin System 2" /></td>
+    <td><img src="img/1.png" alt="Admin System 1" /></td>
+    <td><img src="img/2.png" alt="Admin System 2" /></td>
   </tr>
   <tr>
-    <td><img src="3.png" alt="Admin System 3" /></td>
-    <td><img src="4.png" alt="Admin System 4" /></td>
+    <td><img src="img/3.png" alt="Admin System 3" /></td>
+    <td><img src="img/4.png" alt="Admin System 4" /></td>
   </tr>
   <tr>
-    <td><img src="5.png" alt="Admin System 5" /></td>
-    <td><img src="6.png" alt="Admin System 6" /></td>
+    <td><img src="img/5.png" alt="Admin System 5" /></td>
+    <td><img src="img/6.png" alt="Admin System 6" /></td>
   </tr>
 </table>
 
-### Image Generation
+### Image Effects
 
 <table>
   <tr>
-    <td><img src="img_1.png" alt="Image Generation 1" /></td>
-    <td><img src="img_2.png" alt="Image Generation 2" /></td>
+    <td><img src="img/img_1.png" alt="Image Effects 1" /></td>
+    <td><img src="img/img_2.png" alt="Image Effects 2" /></td>
   </tr>
   <tr>
-    <td><img src="img_3.png" alt="Image Generation 3" /></td>
-    <td><img src="img_4.png" alt="Image Generation 4" /></td>
+    <td><img src="img/img_3.png" alt="Image Effects 3" /></td>
+    <td><img src="img/img_4.png" alt="Image Effects 4" /></td>
   </tr>
 </table>
 
